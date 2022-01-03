@@ -1,54 +1,72 @@
-import { Button, Col, Row } from "react-bootstrap";
-import { Form } from "react-bootstrap";
-import { FaLock, FaUserAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { post_login } from "../redux/action/index";
 import "../style/login.css"
 import imagelogin from "./login.svg"
+import { Form, Input, Button, Checkbox } from 'antd';
+import { Link, useHistory } from "react-router-dom";
 
 export default function Login () {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const login = (values) => {
+        dispatch(post_login(values,history))
+    }
+
     return (
         <>
             <div className="biru">
-                <Row>
-                    <Col>
-                        <div className="forms-container">
-                            <Form>
-                                <div className="signin-signup">
-                                    <div className="sign-in-form">
-                                        <h2 className="title1">Hai</h2><br/>
-                                        <h2 className="title">Selamat Datang</h2>
-                                        <div className="input-field">
-                                            <div className="fa-user"><FaUserAlt ></FaUserAlt></div>
-                                            <input type="email" placeholder="masukkan email anda" required />
-                                        </div>
-                                        <div className="input-field">
-                                            <div className="fa-lock"><FaLock ></FaLock></div>
-                                            <input type="email" placeholder="masukkan password anda" required />
-                                        </div> <br />
-                                        <button className="btn-masuk">Masuk</button>
-                                    </div>
-                                </div>
-                            </Form>
-                        </div>
-                        <div className="panels-container">
-                            <div className="panel left-panel">
-                                <div className="content">
-                                    <h2>Silahkan Mendaftar</h2>
-                                    <p>Buat akun sekarang gratis dan cepat</p>
-                                    <Button className="btn transparent">Daftar</Button>
-                                </div>
-                                {/* <img src="../img/login.svg" alt="" className="image" /> */}
-                                <img src={imagelogin} alt="" className="image" />
+                <div className="forms-container">
+                    <div  className="signin-signup">
+                        <Form
+                                name="normal_login"
+                                initialValues={{
+                                remember: true,
+                                }}
+                                onFinish={login}
+                                style={{ width: "79%", marginTop: 50, marginLeft: 30 }}
+                                size="large"
+                               
+                            >
+                            <div className="sign-in-form">
+                                <h2 className="title1">Hai</h2><br/>
+                                <h2 className="title">Selamat Datang</h2> <br /><br />
+                                <label htmlFor="">Username</label>
+                                <Form.Item name="username" className="input-field" >
+                                    <Input />
+                                </Form.Item>
+                                <label htmlFor="">Password</label>
+                                <Form.Item name="password" className="input-field">
+                                <Input.Password />
+                                </Form.Item>
+
+                                <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                                </Form.Item>
                             </div>
-                            {/* <div className="panel right-panel">
-                                <div></div>
-                            </div> */}
-                        </div>
-                    </Col>
-                </Row>
+                            </Form>
+                    </div>
+                             
+                </div>
+                         <div className="panels-container">
+                             <div className="panel left-panel">
+                                 <div className="content">
+                                     <h2 className="title1">Silahkan Mendaftar</h2>
+                                     <p>Buat akun sekarang gratis dan cepat</p>
+                                     <Button className="btn transparent">Daftar</Button>
+                                 </div>
+                                 <img src="../img/login.svg" alt="" className="image" />
+                                 <img src={imagelogin} alt="" className="image" />
+                             </div>
+                             <div className="panel right-panel">
+                                 <div></div>
+                             </div>
+                         </div>               
 
                 
             </div>
             
-        </>
+         </>
     )
 }
